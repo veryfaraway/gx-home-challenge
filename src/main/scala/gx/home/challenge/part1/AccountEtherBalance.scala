@@ -13,6 +13,10 @@ object AccountEtherBalance extends App {
 
 	val resDF = getBalanceByAccount(transDF, param.date)
 
+	// to debug
+	resDF.printSchema()
+	resDF.show()
+
 	resDF.coalesce(1).write
 			.format("csv")
 			.mode(SaveMode.Overwrite)

@@ -22,7 +22,7 @@ class Part1Test extends FunSuite with SparkSessionTestWrapper {
 	test("filter timestamp") {
 
 		val resDF = df.transform(stringToTimestamp("block_timestamp"))
-				.transform(filterWithDate("20151121"))
+				.transform(filterWithDate("block_timestamp", "20151121"))
 
 		printDF(resDF)
 		assert(resDF.count() == 1)
@@ -38,7 +38,4 @@ class Part1Test extends FunSuite with SparkSessionTestWrapper {
 		assert(balanceList.get(0).getAs[Double](0) == 0.09864143999999)
 		assert(balanceList.get(1).getAs[Double](0) == 129.34773998999898)
 	}
-
-	test("")
-
 }

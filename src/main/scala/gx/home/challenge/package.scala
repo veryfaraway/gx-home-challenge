@@ -12,7 +12,6 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
   * @version 1.0 2019-04-17
   */
 package object challenge {
-	// todo: drop _c17 column
 	def loadCSV(spark: SparkSession, path: String, timestampCol: Option[String] = None): DataFrame = {
 		println(s"Read CSV file: $path")
 		val df = spark.read.format("csv")
@@ -22,6 +21,11 @@ package object challenge {
 
 		if (timestampCol.isDefined) df.transform(stringToTimestamp(timestampCol.get))
 		else df
+	}
+
+	@VisibleForTesting
+	def filterWithDate(timestampCol: String, date: String)(df: DataFrame): DataFrame = {
+		df.filter(from_unixtime(unix_timestamp(col(timestampCol)), "yyyyMMdd") === date)
 	}
 
 	@VisibleForTesting
